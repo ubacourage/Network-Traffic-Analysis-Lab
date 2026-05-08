@@ -14,8 +14,6 @@ This report analyzes a malicious network traffic capture involving an Emotet and
 
 ## Tools Used
 - Wireshark — Used for packet capture analysis, protocol inspection, and identifying suspicious network activity within the PCAP file.
-- VirusTotal
- — Used to verify malicious IP addresses, domains, and other indicators of compromise (IOCs).
-AbuseIPDB
- — Used for threat intelligence and reputation checks on suspicious external IP addresses.
-Ubuntu — Operating system environment used during the network traffic analysis process.
+- VirusTotal — Used to verify malicious IP addresses, domains, and other indicators of compromise (IOCs).
+- AbuseIPDB — Used for threat intelligence and reputation checks on suspicious external IP addresses.
+- Ubuntu — Operating system environment used during the network traffic analysis process.
