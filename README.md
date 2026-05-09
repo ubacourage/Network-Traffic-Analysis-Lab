@@ -1,10 +1,9 @@
 # Network-Traffic-Analysis-Lab
 ## Overview
 
-This repository contains two practical Network Traffic Analysis projects completed using Wireshark in a controlled Ubuntu 22.04 VirtualBox environment. The projects focus on identifying normal network behaviour through a clean live capture and detecting malicious activity in a real-world malware PCAP involving Emotet and Trickbot malware.
+This repository contains two hands-on Network Traffic Analysis projects completed using Wireshark in an Ubuntu virtual environment. The projects focus on analyzing normal network behavior through live traffic capture and investigating malicious activity within an Emotet and Trickbot malware PCAP to identify indicators of compromise (IOCs), suspicious communications, and potential attack behavior.
 
-The first analysis establishes a clean baseline of legitimate network activity generated from a personal Ubuntu virtual machine using Firefox browser traffic. The second analysis investigates a publicly available malware PCAP from malware-traffic-analysis.net to identify indicators of compromise (IOCs), command-and-control (C2) communication, suspicious DNS activity, lateral movement, and malware behaviour patterns.
-
+Part 1 – Live Network Capture Analysis (Clean Traffic Baseline)
 
 ## Objective
 - Analyze the PCAP file to identify malicious network activity
