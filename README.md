@@ -21,7 +21,7 @@ This repository contains two hands-on Network Traffic Analysis projects complete
 
 ## Wireshark Display Filters Used (Analysis)
 
-1. http
+### 1. http
 
 Used to isolate unencrypted HTTP traffic.
 
@@ -32,4 +32,17 @@ No malicious HTTP traffic or suspicious payloads were detected.
 
 ### Analyst Observation
 
-Although traffic was legitimate, the initial HTTP request exposed browser metadata and headers in cleartext before HTTPS redirection.
+The traffic was legitimate.
+
+### 2. dns
+
+Used to analyse DNS queries and responses.
+
+Findings
+DNS queries resolved successfully for bored.com and www.bored.com.
+Firefox telemetry traffic to incoming.telemetry.mozilla was identified.
+No NXDOMAIN anomalies or DGA behaviour were detected.
+All DNS traffic was transmitted over UDP port 53 in cleartext.
+Analyst Observation
+
+The DNS activity was normal and consistent with legitimate browser behaviour. However, unencrypted DNS queries present privacy concerns in real environments.
