@@ -1,7 +1,9 @@
 # Network-Traffic-Analysis-Lab
 ## Overview
 
-This report analyzes a malicious network traffic capture involving an Emotet and Trickbot co-infection using Wireshark, with additional threat intelligence from [VirusTotal](https://www.virustotal.com) and [AbuseIPDB](https://www.abuseipdb.com). The investigation identified multiple indicators of compromise (IOCs), including command-and-control (C2) communication, HTTP data exfiltration, SMB lateral movement, etc. Analysis of nearly 20,000 packets and numerous external connections revealed significant malicious behavior associated with advanced malware operations.
+This repository contains two practical Network Traffic Analysis projects completed using Wireshark in a controlled Ubuntu 22.04 VirtualBox environment. The projects focus on identifying normal network behaviour through a clean live capture and detecting malicious activity in a real-world malware PCAP involving Emotet and Trickbot malware.
+
+The first analysis establishes a clean baseline of legitimate network activity generated from a personal Ubuntu virtual machine using Firefox browser traffic. The second analysis investigates a publicly available malware PCAP from malware-traffic-analysis.net to identify indicators of compromise (IOCs), command-and-control (C2) communication, suspicious DNS activity, lateral movement, and malware behaviour patterns.
 
 
 ## Objective
