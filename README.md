@@ -26,11 +26,11 @@ This repository contains two hands-on Network Traffic Analysis projects complete
 Used to isolate unencrypted HTTP traffic.
 
 ### Findings
-Detected HTTP GET requests to bored.com hosted on Cloudflare infrastructure.
-OCSP certificate checks to Google infrastructure were identified.
-No malicious HTTP traffic or suspicious payloads were detected.
+- Detected HTTP GET requests to bored.com hosted on Cloudflare infrastructure.
+- OCSP certificate checks to Google infrastructure were identified.
+- No malicious HTTP traffic or suspicious payloads were detected.
 
-### Analyst Observation
+### Observation
 
 The traffic was legitimate.
 
@@ -38,11 +38,49 @@ The traffic was legitimate.
 
 Used to analyse DNS queries and responses.
 
-Findings
-DNS queries resolved successfully for bored.com and www.bored.com.
-Firefox telemetry traffic to incoming.telemetry.mozilla was identified.
-No NXDOMAIN anomalies or DGA behaviour were detected.
-All DNS traffic was transmitted over UDP port 53 in cleartext.
-Analyst Observation
+### Findings
+- DNS queries resolved successfully for bored.com and www.bored.com.
+- Firefox telemetry traffic to incoming.telemetry.mozilla was identified.
+- No NXDOMAIN anomalies or DGA behaviour were detected.
+- All DNS traffic was transmitted over UDP port 53 in cleartext.
+
+### Observation
 
 The DNS activity was normal and consistent with legitimate browser behaviour. However, unencrypted DNS queries present privacy concerns in real environments.
+
+### 3. tcp.flags.syn==1
+
+Used to identify TCP connection attempts and possible port scanning activity.
+
+### Findings
+- Observed SYN packets to ports 80 and 443 only.
+- Connections were made to Cloudflare and Google IP ranges.
+- No port scanning or suspicious connection patterns were observed.
+
+### Observation
+
+Traffic reflected normal browser communication patterns with no evidence of reconnaissance or malicious scanning.
+
+### 4. arp
+
+Used to detect ARP broadcasts and possible ARP spoofing activity.
+
+### Findings
+-Zero ARP packets were observed.
+
+### Observation
+
+In NAT mode, VirtualBox handles ARP resolution internally, preventing ARP broadcasts from reaching the VM capture interface.
+
+### Findings Summary
+
+Category	Findings
+Total Packets	11,305
+Traffic Type	Legitimate browsing traffic
+External IPs	Cloudflare and Google infrastructure
+Suspicious Activity	None detected
+DNS Anomalies	None
+Port Scanning	None
+Malware Indicators	None
+Overall Severity	LOW / INFORMATION
+
