@@ -20,3 +20,16 @@ This repository contains two hands-on Network Traffic Analysis projects complete
 - Firefox browser - Generated controlled browsing traffic
 
 ## Wireshark Display Filters Used (Analysis)
+
+1. http
+
+Used to isolate unencrypted HTTP traffic.
+
+### Findings
+Detected HTTP GET requests to bored.com hosted on Cloudflare infrastructure.
+OCSP certificate checks to Google infrastructure were identified.
+No malicious HTTP traffic or suspicious payloads were detected.
+
+### Analyst Observation
+
+Although traffic was legitimate, the initial HTTP request exposed browser metadata and headers in cleartext before HTTPS redirection.
