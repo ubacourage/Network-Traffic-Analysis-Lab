@@ -25,6 +25,9 @@ This repository contains two hands-on Network Traffic Analysis projects complete
 
 Used to isolate unencrypted HTTP traffic.
 
+<img width="1280" height="768" alt="livecap_http" src="https://github.com/user-attachments/assets/f2eecb22-27a0-4acc-8162-57325ec15afc" />
+
+
 ### Findings
 - Detected HTTP GET requests to bored.com hosted on Cloudflare infrastructure.
 - OCSP certificate checks to Google infrastructure were identified.
@@ -112,6 +115,9 @@ No confirmed indicators of compromise (IOCs) were identified during the live cap
 
 Used to isolate outbound HTTP requests and identify C2 communication.
 
+<img width="1280" height="768" alt="Screenshot from 2026-05-06 18-49-52" src="https://github.com/user-attachments/assets/97536198-c80a-4e0e-ab6c-93109bcc8355" />
+
+
 ### Findings
 - Multiple HTTP POST requests to 90.160.138.175.
 - Randomized URL paths consistent with Emotet C2 communication.
@@ -123,7 +129,9 @@ The repeated POST requests, randomized paths, and persistent communication stron
 
 ### 2. dns.qry.name
 
-Used to analyse DNS queries and identify Domain Generation Algorithms DGA activity.
+Used to analyse DNS queries and identify Domain Generation Algorithms (DGA) activity.
+
+<img width="1280" height="768" alt="Screenshot from 2026-05-06 18-51-50" src="https://github.com/user-attachments/assets/3e54f9d2-a369-4425-843a-bbf54c51983d" />
 
 ### Findings
 - 30 NXDOMAIN responses out of 162 DNS queries.
@@ -135,9 +143,13 @@ Used to analyse DNS queries and identify Domain Generation Algorithms DGA activi
 
 The high NXDOMAIN rate and automated DNSBL lookups are strong indicators of malware-driven DGA activity and C2 validation behaviour.
 
+
 ### tcp.port==4444
 
 Used to display all TCP traffic.
+
+<img width="1280" height="768" alt="Screenshot from 2026-05-06 18-53-10" src="https://github.com/user-attachments/assets/c98fb248-7773-4de5-81b1-74121a02f575" />
+
 
 ### findings
 - No Metasploit reverse shell activity detected.
@@ -146,8 +158,11 @@ Used to display all TCP traffic.
 
 Used to display all ICMP (Internet Control Message Protocol) traffic.
 
+<img width="1280" height="768" alt="Screenshot from 2026-05-06 18-53-36" src="https://github.com/user-attachments/assets/4a5a4bb1-bc05-48cd-ab06-e4821d386fff" />
+
+
 ### findings 
-- <img width="1280" height="768" alt="Screenshot from 2026-05-06 18-51-50" src="https://github.com/user-attachments/assets/3e54f9d2-a369-4425-843a-bbf54c51983d" />
+- 
 No ICMP scanning or flood activity observed.
 
 
