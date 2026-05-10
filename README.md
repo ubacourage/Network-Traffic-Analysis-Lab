@@ -74,13 +74,13 @@ In NAT mode, VirtualBox handles ARP resolution internally, preventing ARP broadc
 
 ### Findings Summary
 
-Category	Findings
-Total Packets	11,305
-Traffic Type	Legitimate browsing traffic
-External IPs	Cloudflare and Google infrastructure
-Suspicious Activity	None detected
-DNS Anomalies	None
-Port Scanning	None
-Malware Indicators	None
-Overall Severity	LOW / INFORMATION
+| Category	    | Findings
+| Total Packets |	11,305
+| Traffic Type  |	Legitimate browsing traffic
+| External IPs	| Cloudflare and Google infrastructure
+| Suspicious Activity	|None detected
+| DNS Anomalies	| None
+| Port Scanning	| None
+| Malware Indicators	| None
+| Overall Severity	|LOW / INFORMATION
 
