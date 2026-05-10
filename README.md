@@ -66,7 +66,7 @@ Traffic reflected normal browser communication patterns with no evidence of reco
 Used to detect ARP broadcasts and possible ARP spoofing activity.
 
 ### Findings
--Zero ARP packets were observed.
+Zero ARP packets were observed.
 
 ### Observation
 
@@ -83,5 +83,75 @@ In NAT mode, VirtualBox handles ARP resolution internally, preventing ARP broadc
 | DNS Anomalies	| None
 | Port Scanning	| None
 | Malware Indicators	| None
-| Overall Severity	|LOW / INFORMATION
+| Overall Severity	| Low
+
+### Indicators of Suspicious Activity
+No confirmed indicators of compromise (IOCs) were identified during the live capture.
+
+### Recommendations
+- Enable DNS-over-HTTPS (DoH) to encrypt DNS queries.
+- Enable HTTPS-Only Mode in Firefox
+
+# Part 2 – Malware PCAP Analysis (Emotet + Trickbot Co-infection)
+
+## Objectives
+- Analyse a real-world malware PCAP using Wireshark.
+- Identify indicators of compromise (IOCs).
+- Investigate suspicious DNS and HTTP activity.
+- Detect command-and-control (C2) communication.
+- Demonstrate SOC analyst investigative methodology.
+
+## Tools Used
+- Wireshark — For packet capture and traffic analysis.
+- VirusTotal — Used to verify malicious IP addresses, domains, and other indicators of compromise (IOCs).
+- AbuseIPDB — Used for threat intelligence and reputation checks on suspicious external IP addresses.
+- Ubuntu — Operating system analysis environment.
+
+## Wireshark Display Filters Used (Analysis)
+### 1. http.request
+
+Used to isolate outbound HTTP requests and identify C2 communication.
+
+### Findings
+- Multiple HTTP POST requests to 90.160.138.175.
+- Randomized URL paths consistent with Emotet C2 communication.
+- POST requests to 167.99.105.11:8080 linked to Trickbot activity.
+
+### Observation
+
+The repeated POST requests, randomized paths, and persistent communication strongly indicate active malware beaconing and data exfiltration. 
+
+### 2. dns.qry.name
+
+Used to analyse DNS queries and identify Domain Generation Algorithms DGA activity.
+
+### Findings
+- 30 NXDOMAIN responses out of 162 DNS queries.
+- Queries to api.ipify.org identified.
+- WPAD abuse attempts detected through wpad.stonypebble.com.
+- DNSBL lookups against Spamhaus, SORBS, and Barracuda observed.
+
+### Observation
+
+The high NXDOMAIN rate and automated DNSBL lookups are strong indicators of malware-driven DGA activity and C2 validation behaviour.
+
+### tcp.port==4444
+
+Used to display all TCP traffic.
+
+### findings
+- No Metasploit reverse shell activity detected.
+
+### icmp
+
+Used to display all ICMP (Internet Control Message Protocol) traffic.
+
+### findings 
+- <img width="1280" height="768" alt="Screenshot from 2026-05-06 18-51-50" src="https://github.com/user-attachments/assets/3e54f9d2-a369-4425-843a-bbf54c51983d" />
+No ICMP scanning or flood activity observed.
+
+
+
+
+
 
