@@ -25,7 +25,7 @@ This repository contains two hands-on Network Traffic Analysis projects complete
 
 Used to isolate unencrypted HTTP traffic.
 
-<img width="1000" height="600" alt="livecap_http" src="https://github.com/user-attachments/assets/f2eecb22-27a0-4acc-8162-57325ec15afc" />
+<img width="700" height="600" alt="livecap_http" src="https://github.com/user-attachments/assets/f2eecb22-27a0-4acc-8162-57325ec15afc" />
 
 
 ### Findings
