@@ -45,14 +45,42 @@ Wireshark Filter Used: http
 The traffic was legitimate and consistent with normal browser activity. However, the initial HTTP request exposed browser metadata and headers in cleartext before encryption was established. 
 
 <img width="700" height="400" alt="livecap_http" src="https://github.com/user-attachments/assets/f2eecb22-27a0-4acc-8162-57325ec15afc" />
-#### Figure 1 – HTTP filter analysis showing GET requests and HTTPS redirection.
+Figure 1 – HTTP filter analysis showing GET requests and HTTPS redirection.
 
-## Objective
-- Capture and analyse live network traffic from an Ubuntu 22.04 VM.
-- Understand normal network behaviour during standard web browsing.
-- Apply Wireshark display filters to isolate and inspect traffic.
-- Validate observed IP addresses using threat intelligence platforms.
-- Establish a clean traffic baseline for comparison with malicious captures.
+### 2. DNS Traffic Analysis
+
+Wireshark Filter Used: dns
+
+### Findings
+- DNS queries resolved successfully for bored.com and www.bored.com.
+- Firefox telemetry traffic to incoming.telemetry.mozilla was identified.
+- No DGA activity or NXDOMAIN anomalies were detected.
+- DNS queries were transmitted over UDP port 53 in cleartext.
+
+### Assessment
+The DNS activity reflected legitimate browsing behaviour with no evidence of malicious domain generation or suspicious DNS tunnelling.
+
+<img width="700" height="400" alt="livecap_dns" src="https://github.com/user-attachments/assets/46e784b2-3cd6-41b2-bf42-925fb3e7b306" />
+Figure 2 – DNS filter analysis displaying successful domain resolutions.
+
+### 3. TCP SYN Analysis
+
+Wireshark Filter Used: tcp.flags.syn==1
+
+### Findings
+- SYN packets were observed only for ports 80 and 443.
+- All TCP handshakes completed successfully with valid SYN-ACK responses.
+- No port scanning behaviour or unusual destination ports were identified.
+
+### Assessment
+
+Traffic patterns were normal and aligned with legitimate web browsing behaviour.
+
+<img width="700" height="500" alt="livecap_tcpflagsyn" src="https://github.com/user-attachments/assets/cfa89beb-a670-4b6a-999a-ae835e300be6" />
+Figure 3 – SYN packet analysis showing standard TCP connection establishment.
+
+
+
 
 ## Tools Used
 - Wireshark — For packet capture and traffic analysis.
@@ -61,25 +89,9 @@ The traffic was legitimate and consistent with normal browser activity. However,
 - Ubuntu — Operating system analysis environment.
 - Firefox browser - Generated controlled browsing traffic
 
-## Wireshark Display Filters Used (Analysis)
-
-### 1. http
-
-Used to isolate unencrypted HTTP traffic.
-
-<img width="700" height="400" alt="livecap_http" src="https://github.com/user-attachments/assets/f2eecb22-27a0-4acc-8162-57325ec15afc" />
 
 
-### Findings
-- Detected HTTP GET requests to bored.com hosted on Cloudflare infrastructure.
-- OCSP certificate checks to Google infrastructure were identified.
-- No malicious HTTP traffic or suspicious payloads were detected.
 
-### Observation
-
-The traffic was legitimate.
-
-### 2. dns
 
 Used to analyse DNS queries and responses.
 
