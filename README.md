@@ -79,6 +79,27 @@ Traffic patterns were normal and aligned with legitimate web browsing behaviour.
 <img width="700" height="500" alt="livecap_tcpflagsyn" src="https://github.com/user-attachments/assets/cfa89beb-a670-4b6a-999a-ae835e300be6" />
 Figure 3 – SYN packet analysis showing standard TCP connection establishment.
 
+### 4. ARP Traffic Analysis
+
+Wireshark Filter Used: arp
+
+### Findings
+- Zero ARP packets were captured.
+
+### Assessment
+
+VirtualBox handled ARP resolution internally, preventing ARP broadcasts from reaching the capture interface.
+
+<img width="700" height="500" alt="livecap_arp" src="https://github.com/user-attachments/assets/79f57c6f-cda3-4c68-a547-d329fa573e58" />
+Figure 4 – ARP filter showing zero packets.
+
+### IOCs Found
+Result: No Confirmed Indicators of Compromise
+
+All observed IP addresses belonged to legitimate infrastructure providers such as Cloudflare and Google.
+
+### Observed Legitimate Endpoints
+
 
 
 
