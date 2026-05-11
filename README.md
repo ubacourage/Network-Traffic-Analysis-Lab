@@ -109,6 +109,24 @@ All observed IP addresses belonged to legitimate infrastructure providers such a
 | Domain	          | incoming.telemetry.mozilla |Firefox telemetry
 
 
+### Not Observed
+- Port 4444 activity
+- Port 6667 activity
+- Port 8080 activity
+- DGA behaviour
+- NXDOMAIN anomalies
+- SMB traffic
+- ARP spoofing
+
+
+## Recommended Actions
+- Enable DNS-over-HTTPS (DoH) in Firefox.
+- Enable HTTPS-Only Mode in Firefox.
+- Disable unnecessary Firefox telemetry services.
+- Use Bridged Adapter mode when practising ARP analysis.
+- Use NAT Network mode for multi-VM SOC labs.
+
+
 ## Tools Used
 - Wireshark — For packet capture and traffic analysis.
 - VirusTotal — Used to verify malicious IP addresses, domains, and other indicators of compromise (IOCs).
@@ -117,29 +135,74 @@ All observed IP addresses belonged to legitimate infrastructure providers such a
 - Firefox browser - Generated controlled browsing traffic
 
 
+# Part 2 – Malware PCAP Analysis (Emotet + Trickbot)
+
+## Network Environment Analysed
+| Parameter	                                           | Value
+|-----------------------------------------------|----------------------------|
+| PCAP Source	                                  | malware-traffic-analysis.net
+| Malware Families	                            | Emotet + Trickbot
+| Total Packets	                                | 19,835
+| Infected Host	                                | 172.16.1.101
+| Internal DNS Server	                          | 172.16.1.10
+| External IPs Contacted	                      | 47
+| TCP Conversations	                            | 198
+| Dominant Protocol	                            | TCP (98.1%)
+| Suspicious Ports	                            | 447, 449, 8080
+| Analysis Platform	                            | Ubuntu - Wireshark
+| Threat Intel Tools                            | VirusTotal, AbuseIPDB
 
 
+## Suspicious Findings
+### 1. Emotet C2 Beaconing
 
-Used to analyse DNS queries and responses.
+Wireshark Filter Used: http.request
 
 ### Findings
-- DNS queries resolved successfully for www.bored.com.
-- Firefox telemetry traffic to incoming.telemetry.mozilla was identified.
-- No NXDOMAIN anomalies or DGA behaviour were detected.
-- All DNS traffic was transmitted over UDP port 53 in cleartext.
+- Multiple HTTP POST requests to 90.160.138.175.
+- Randomized URL paths characteristic of Emotet C2 communication.
+- Additional POST requests to 167.99.105.11:8080 linked to Trickbot activity.
+- SSDP M-SEARCH broadcasts identified.
 
-### Observation
+### Assessment
+The randomized POST requests and persistent outbound communication strongly indicate active malware beaconing and data exfiltration.
 
-The DNS activity was normal and consistent with legitimate browser behaviour. However, unencrypted DNS queries present privacy concerns in real environments.
+<img width="700" height="400" alt="pcap_http.request" src="https://github.com/user-attachments/assets/8a8e860a-d310-4805-b4f5-513a23690f02" />
+Figure 5 – HTTP POST requests to Emotet and Trickbot C2 servers.
 
-### 3. tcp.flags.syn==1
 
-Used to identify TCP connection attempts and possible port scanning activity.
+### 2. Suspicious DNS Activity and DGA Behaviour
+
+Wireshark Filter Used: dns.qry.name
 
 ### Findings
-- Observed SYN packets to ports 80 and 443 only.
-- Connections were made to Cloudflare and Google IP ranges.
-- No port scanning or suspicious connection patterns were observed.
+- 30 NXDOMAIN responses out of 162 DNS queries (18.52%).
+- WPAD abuse attempts detected through wpad.stonypebble.com.
+- DNSBL lookups against Spamhaus, SORBS, and Barracuda observed.
+- LDAP SRV lookups indicated Active Directory reconnaissance.
+
+### Assessment
+
+The high NXDOMAIN rate and automated DNSBL queries are strong indicators of malware-driven DGA activity and C2 validation behaviour.
+
+<img width="1280" height="768" alt="Screenshot from 2026-05-06 18-51-50" src="https://github.com/user-attachments/assets/34cc3ead-5373-4f48-bb94-dc8b879c093d" />
+Figure 6 – DNS analysis showing DGA activity and DNSBL lookups.
+
+
+
+### 3. Persistent C2 Communication on Non-Standard Ports
+
+Wireshark Tools Used: Statistics > Conversations and Endpoints
+
+### Findings
+- 47 external IP addresses contacted by a single infected host.
+- Persistent outbound sessions on ports 447, 449, and 8080.
+- Long-duration sessions exceeding three hours.
+- Large data transfers to suspected malware infrastructure.
+
+### Assessment
+
+
 
 ### Observation
 
