@@ -35,6 +35,18 @@ Both analyses demonstrate practical SOC analyst skills in packet inspection, tra
 
 Wireshark Filter Used: http
 
+### Findings
+- HTTP GET requests were made to bored.com hosted on Cloudflare infrastructure.
+- HTTP 301 redirects upgraded traffic from HTTP to HTTPS.
+- OCSP certificate validation traffic to Google infrastructure was identified.
+- No malicious payloads or suspicious HTTP requests were observed.
+
+### Assessment
+The traffic was legitimate and consistent with normal browser activity. However, the initial HTTP request exposed browser metadata and headers in cleartext before encryption was established. 
+
+<img width="700" height="400" alt="livecap_http" src="https://github.com/user-attachments/assets/f2eecb22-27a0-4acc-8162-57325ec15afc" />
+#### Figure 1 – HTTP filter analysis showing GET requests and HTTPS redirection.
+
 ## Objective
 - Capture and analyse live network traffic from an Ubuntu 22.04 VM.
 - Understand normal network behaviour during standard web browsing.
