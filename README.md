@@ -185,12 +185,25 @@ Wireshark Filter Used: dns.qry.name
 
 The high NXDOMAIN rate and automated DNSBL queries are strong indicators of malware-driven DGA activity and C2 validation behaviour.
 
-<img width="1280" height="768" alt="Screenshot from 2026-05-06 18-51-50" src="https://github.com/user-attachments/assets/34cc3ead-5373-4f48-bb94-dc8b879c093d" />
+<img width="700" height="400" alt="pcap_dns.qry.name" src="https://github.com/user-attachments/assets/34cc3ead-5373-4f48-bb94-dc8b879c093d" />
 Figure 6 – DNS analysis showing DGA activity and DNSBL lookups.
 
+### 3. Negative Findings
+Wireshark Filter Used: tcp.port==4444
+No Metasploit reverse shell activity detected.
+
+Wireshark Filter Used: icmp
+No ICMP scanning or flood traffic identified.
+
+### Assessment
+
+The malware relied on TCP-based HTTP/HTTPS communication rather than ICMP or default Metasploit ports.
+<img width="600" height="400" alt="pcap_tcp.port" src="https://github.com/user-attachments/assets/b0d1a62a-4fcd-4c76-8ac7-1c2624fd448a" /> |
+<img width="600" height="400" alt="Screenshot from 2026-05-06 18-53-36" src="https://github.com/user-attachments/assets/80ef556d-6370-487f-ba85-37eeea047c4e" />
+Figure 7–8 – Negative findings for port 4444 and ICMP.
 
 
-### 3. Persistent C2 Communication on Non-Standard Ports
+### 4. Persistent C2 Communication on Non-Standard Ports
 
 Wireshark Tools Used: Statistics > Conversations and Endpoints
 
@@ -201,6 +214,14 @@ Wireshark Tools Used: Statistics > Conversations and Endpoints
 - Large data transfers to suspected malware infrastructure.
 
 ### Assessment
+The communication patterns strongly indicate persistent command-and-control activity and malware module delivery.
+
+<img width="600" height="400" alt="pcap_stat_conversations" src="https://github.com/user-attachments/assets/06f93bfe-857f-415d-b8fc-904e99b1559f" /> |
+<img width="600" height="400" alt="pcap_stat_endpoint" src="https://github.com/user-attachments/assets/9a61329b-2ec2-4ab6-a339-3d86eedc5a9f" />
+Figure 7-8 – IPv4 Conversations and Endpoint analysis
+
+
+
 
 
 
