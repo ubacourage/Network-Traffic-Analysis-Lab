@@ -1,9 +1,39 @@
 # Network-Traffic-Analysis-Lab
-## Overview
 
-This repository contains two hands-on Network Traffic Analysis projects completed using Wireshark in an Ubuntu virtual environment. The projects focus on analyzing normal network behavior through live traffic capture and investigating malicious activity within an Emotet and Trickbot malware PCAP to identify indicators of compromise (IOCs), suspicious communications, and potential attack behavior.
+## Network Traffic Analysis Report – Live Capture & Malware PCAP Analysis
+
+## Executive Summary 
+
+This repository contains two practical network traffic analysis investigations performed using Wireshark in an Ubuntu 22.04 VirtualBox lab environment.
+
+The first investigation analysed a 60-second live packet capture generated from normal Firefox web browsing activity on an Ubuntu virtual machine. The purpose was to establish a clean traffic baseline and understand legitimate network behaviour. Analysis confirmed that all observed traffic was benign, consisting primarily of HTTP/HTTPS connections to Cloudflare-hosted content, DNS queries, and OCSP certificate validation traffic.
+
+The second investigation focused on a real-world malware PCAP involving an Emotet and Trickbot co-infection obtained from malware-traffic-analysis.net. The analysis revealed multiple indicators of compromise (IOCs), including C2 beaconing, randomized HTTP POST requests, suspicious DNS activity, Active Directory reconnaissance, SMB lateral movement, persistent outbound connections on non-standard ports, and high NXDOMAIN rates associated with DGA behaviour.
+
+Both analyses demonstrate practical SOC analyst skills in packet inspection, traffic filtering, IOC extraction, malware traffic analysis, and network threat investigation.
+
 
 # Part 1 – Live Network Capture Analysis (Clean Traffic Baseline)
+
+## Network Environment Analysed
+
+| Parameter                                        | Value
+|-----------------------------------------------|----------------------------|
+| Operating System	                            | Ubuntu 22.04 LTS
+| Hypervisor	                                  | VirtualBox
+| Capture Interface	                            | enp0s3
+| Capture Duration	                            | 60 seconds
+| Total Packets	                                | 11,305
+| Analyst Machine IP	                          | 10.0.2.15
+| DNS/Gateway	                                  | 192.168.43.1
+| Primary Destinations	                        | Cloudflare and Google infrastructure
+| Browser Used	                                | Firefox
+
+
+## Suspicious Findings
+### 1. HTTP Traffic Analysis
+
+Wireshark Filter Used: http
 
 ## Objective
 - Capture and analyse live network traffic from an Ubuntu 22.04 VM.
@@ -165,13 +195,30 @@ Used to display all ICMP (Internet Control Message Protocol) traffic.
 - 
 No ICMP scanning or flood activity observed.
 
-### Findings Summary
-Category	| Findings
-|-----------------------------------------------|----------------------------|
-Total Packets	19,835
-Malware Families	Emotet + Trickbot
-External IPs	47
+### 3. Statistics > Conversations and Endpoints
 
+Used to identify high-volume external communications and unusual ports.
+
+### findings 
+- 47 unique external IP addresses contacted.
+- Persistent sessions on non-standard ports 447, 449, and 8080.
+- Large data transfers to suspected C2 infrastructure.
+
+### Observation
+
+The large number of external endpoints and persistent communications are abnormal for a workstation and strongly indicate malware activity.
+
+
+### Findings Summary
+| Category	                                       | Findings
+|-----------------------------------------------|----------------------------|
+| Total Packets	                                    | 19,835
+| Malware Families                               	  | Emotet + Trickbot
+| External IPs	                                    | 47
+| Suspicious Ports	                                | 447, 449, 8080
+| SMB Activity	                                    | Detected
+| Data Exfiltration	                                | Confirmed
+| Overall Severity	                                | CRITICAL
 
 
 
