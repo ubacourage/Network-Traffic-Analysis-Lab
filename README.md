@@ -221,7 +221,7 @@ The communication patterns strongly indicate persistent command-and-control acti
 Figure 7-8: IPv4 Conversations and Endpoint analysis
 
 
-## Protocol Hierarchy Overview
+## 5. Protocol Hierarchy 
 
 Wireshark Tool Used: Statistics > Protocol Hierarchy
 
