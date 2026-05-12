@@ -61,7 +61,7 @@ Wireshark Filter Used: dns
 ### Assessment
 The DNS activity reflected legitimate browsing behaviour with no evidence of malicious domain generation or suspicious DNS tunnelling.
 
-<img width="600" height="400" alt="livecap_dns" src="https://github.com/user-attachments/assets/46e784b2-3cd6-41b2-bf42-925fb3e7b306" />
+<img width="500" height="300" alt="livecap_dns" src="https://github.com/user-attachments/assets/46e784b2-3cd6-41b2-bf42-925fb3e7b306" />
 
 Figure 2 – DNS filter analysis displaying successful domain resolutions.
 
@@ -172,6 +172,7 @@ Wireshark Filter Used: http.request
 The randomized POST requests and persistent outbound communication strongly indicate active malware beaconing and data exfiltration.
 
 <img width="500" height="300" alt="pcap_http.request" src="https://github.com/user-attachments/assets/8a8e860a-d310-4805-b4f5-513a23690f02" />
+
 Figure 5 – HTTP POST requests to Emotet and Trickbot C2 servers.
 
 
