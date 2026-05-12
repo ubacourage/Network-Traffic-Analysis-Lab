@@ -44,7 +44,8 @@ Wireshark Filter Used: http
 ### Assessment
 The traffic was legitimate and consistent with normal browser activity. However, the initial HTTP request exposed browser metadata and headers in cleartext before encryption was established. 
 
-<img width="700" height="400" alt="livecap_http" src="https://github.com/user-attachments/assets/f2eecb22-27a0-4acc-8162-57325ec15afc" />
+<img width="500" height="300" alt="livecap_http" src="https://github.com/user-attachments/assets/f2eecb22-27a0-4acc-8162-57325ec15afc" />
+
 Figure 1 – HTTP filter analysis showing GET requests and HTTPS redirection.
 
 ### 2. DNS Traffic Analysis
@@ -60,7 +61,8 @@ Wireshark Filter Used: dns
 ### Assessment
 The DNS activity reflected legitimate browsing behaviour with no evidence of malicious domain generation or suspicious DNS tunnelling.
 
-<img width="700" height="400" alt="livecap_dns" src="https://github.com/user-attachments/assets/46e784b2-3cd6-41b2-bf42-925fb3e7b306" />
+<img width="600" height="400" alt="livecap_dns" src="https://github.com/user-attachments/assets/46e784b2-3cd6-41b2-bf42-925fb3e7b306" />
+
 Figure 2 – DNS filter analysis displaying successful domain resolutions.
 
 ### 3. TCP SYN Analysis
@@ -76,7 +78,8 @@ Wireshark Filter Used: tcp.flags.syn==1
 
 Traffic patterns were normal and aligned with legitimate web browsing behaviour.
 
-<img width="700" height="500" alt="livecap_tcpflagsyn" src="https://github.com/user-attachments/assets/cfa89beb-a670-4b6a-999a-ae835e300be6" />
+<img width="500" height="300" alt="livecap_tcpflagsyn" src="https://github.com/user-attachments/assets/cfa89beb-a670-4b6a-999a-ae835e300be6" />
+
 Figure 3 – SYN packet analysis showing standard TCP connection establishment.
 
 ### 4. ARP Traffic Analysis
@@ -90,7 +93,8 @@ Wireshark Filter Used: arp
 
 VirtualBox handled ARP resolution internally, preventing ARP broadcasts from reaching the capture interface.
 
-<img width="700" height="500" alt="livecap_arp" src="https://github.com/user-attachments/assets/79f57c6f-cda3-4c68-a547-d329fa573e58" />
+<img width="500" height="300" alt="livecap_arp" src="https://github.com/user-attachments/assets/79f57c6f-cda3-4c68-a547-d329fa573e58" />
+
 Figure 4 – ARP filter showing zero packets.
 
 ## IOCs Found
@@ -167,7 +171,7 @@ Wireshark Filter Used: http.request
 ### Assessment
 The randomized POST requests and persistent outbound communication strongly indicate active malware beaconing and data exfiltration.
 
-<img width="600" height="400" alt="pcap_http.request" src="https://github.com/user-attachments/assets/8a8e860a-d310-4805-b4f5-513a23690f02" />
+<img width="500" height="300" alt="pcap_http.request" src="https://github.com/user-attachments/assets/8a8e860a-d310-4805-b4f5-513a23690f02" />
 Figure 5 – HTTP POST requests to Emotet and Trickbot C2 servers.
 
 
@@ -186,6 +190,7 @@ Wireshark Filter Used: dns.qry.name
 The high NXDOMAIN rate and automated DNSBL queries are strong indicators of malware-driven DGA activity and C2 validation behaviour.
 
 <img width="500" height="300" alt="pcap_dns.qry.name" src="https://github.com/user-attachments/assets/34cc3ead-5373-4f48-bb94-dc8b879c093d" />
+
 Figure 6 – DNS analysis showing DGA activity and DNSBL lookups.
 
 ### 3. Negative Findings
@@ -218,6 +223,7 @@ The communication patterns strongly indicate persistent command-and-control acti
 
 <img width="500" height="300" alt="pcap_stat_conversations" src="https://github.com/user-attachments/assets/06f93bfe-857f-415d-b8fc-904e99b1559f" /> |
 <img width="500" height="300" alt="pcap_stat_endpoint" src="https://github.com/user-attachments/assets/9a61329b-2ec2-4ab6-a339-3d86eedc5a9f" />
+
 Figure 7-8: IPv4 Conversations and Endpoint analysis
 
 
@@ -260,7 +266,6 @@ Figure 9 — Protocol Hierarchy Statistics
 ## Suspicious Domains and URLs
 | Domain / URL	|                                   Description
 |-----------------------------|----------------------------------------------|
-| api.ipify.org	              | External IP lookup service abused by malware
 | wpad.stonypebble.com	      | WPAD abuse activity
 | Randomized POST URL paths	  | Emotet C2 communication
 | DNSBL lookups	              | Automated malware validation activity
