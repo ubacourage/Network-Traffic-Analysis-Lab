@@ -167,7 +167,7 @@ Wireshark Filter Used: http.request
 ### Assessment
 The randomized POST requests and persistent outbound communication strongly indicate active malware beaconing and data exfiltration.
 
-<img width="700" height="400" alt="pcap_http.request" src="https://github.com/user-attachments/assets/8a8e860a-d310-4805-b4f5-513a23690f02" />
+<img width="600" height="400" alt="pcap_http.request" src="https://github.com/user-attachments/assets/8a8e860a-d310-4805-b4f5-513a23690f02" />
 Figure 5 – HTTP POST requests to Emotet and Trickbot C2 servers.
 
 
@@ -185,7 +185,7 @@ Wireshark Filter Used: dns.qry.name
 
 The high NXDOMAIN rate and automated DNSBL queries are strong indicators of malware-driven DGA activity and C2 validation behaviour.
 
-<img width="700" height="400" alt="pcap_dns.qry.name" src="https://github.com/user-attachments/assets/34cc3ead-5373-4f48-bb94-dc8b879c093d" />
+<img width="500" height="300" alt="pcap_dns.qry.name" src="https://github.com/user-attachments/assets/34cc3ead-5373-4f48-bb94-dc8b879c093d" />
 Figure 6 – DNS analysis showing DGA activity and DNSBL lookups.
 
 ### 3. Negative Findings
@@ -198,9 +198,9 @@ No ICMP scanning or flood traffic identified.
 ### Assessment
 
 The malware relied on TCP-based HTTP/HTTPS communication rather than ICMP or default Metasploit ports.
-<img width="600" height="400" alt="pcap_tcp.port" src="https://github.com/user-attachments/assets/b0d1a62a-4fcd-4c76-8ac7-1c2624fd448a" /> |
-<img width="600" height="400" alt="Screenshot from 2026-05-06 18-53-36" src="https://github.com/user-attachments/assets/80ef556d-6370-487f-ba85-37eeea047c4e" />
-Figure 7–8 – Negative findings for port 4444 and ICMP.
+<img width="500" height="300" alt="pcap_tcp.port" src="https://github.com/user-attachments/assets/b0d1a62a-4fcd-4c76-8ac7-1c2624fd448a" /> |
+<img width="500" height="300" alt="Screenshot from 2026-05-06 18-53-36" src="https://github.com/user-attachments/assets/80ef556d-6370-487f-ba85-37eeea047c4e" />
+Figure 7–8: Negative findings for port 4444 and ICMP.
 
 
 ### 4. Persistent C2 Communication on Non-Standard Ports
@@ -216,144 +216,89 @@ Wireshark Tools Used: Statistics > Conversations and Endpoints
 ### Assessment
 The communication patterns strongly indicate persistent command-and-control activity and malware module delivery.
 
-<img width="600" height="400" alt="pcap_stat_conversations" src="https://github.com/user-attachments/assets/06f93bfe-857f-415d-b8fc-904e99b1559f" /> |
-<img width="600" height="400" alt="pcap_stat_endpoint" src="https://github.com/user-attachments/assets/9a61329b-2ec2-4ab6-a339-3d86eedc5a9f" />
-Figure 7-8 – IPv4 Conversations and Endpoint analysis
+<img width="500" height="300" alt="pcap_stat_conversations" src="https://github.com/user-attachments/assets/06f93bfe-857f-415d-b8fc-904e99b1559f" /> |
+<img width="500" height="300" alt="pcap_stat_endpoint" src="https://github.com/user-attachments/assets/9a61329b-2ec2-4ab6-a339-3d86eedc5a9f" />
+Figure 7-8: IPv4 Conversations and Endpoint analysis
 
 
+## Protocol Hierarchy Overview
 
-
-
-
-### Observation
-
-Traffic reflected normal browser communication patterns with no evidence of reconnaissance or malicious scanning.
-
-### 4. arp
-
-Used to detect ARP broadcasts and possible ARP spoofing activity.
+Wireshark Tool Used: Statistics > Protocol Hierarchy
 
 ### Findings
-Zero ARP packets were observed.
 
-### Observation
+* 98.1% of all captured traffic consisted of TCP packets.
+* TLS accounted for 1,413 packets (7.1%) indicating encrypted outbound communication.
+* HTTP traffic accounted for 83 packets (0.4%) and was associated with malicious HTTP POST activity.
+* SMB and SMB2 traffic were identified within the capture.
+* NetBIOS traffic was present, indicating possible internal network discovery.
+* LDAP protocol activity was detected, suggesting Active Directory reconnaissance.
 
-In NAT mode, VirtualBox handles ARP resolution internally, preventing ARP broadcasts from reaching the VM capture interface.
+### Assessment
 
-### Findings Summary
+The dominance of TCP traffic confirms that the malware primarily relied on TCP-based communication for command-and-control (C2) activity. The presence of SMB, SMB2, NetBIOS, and LDAP traffic is highly suspicious for a standard workstation and strongly suggests internal reconnaissance and lateral movement attempts across the network. Combined with the DNS and HTTP findings, the observed behaviour is consistent with known Emotet and Trickbot infection patterns.
 
-| Category	    | Findings
-|-----------------------------------------------|----------------------------|
-| Total Packets |	11,305
-| Traffic Type  |	Legitimate browsing traffic
-| External IPs	| Cloudflare and Google infrastructure
-| Suspicious Activity	|None detected
-| DNS Anomalies	| None
-| Port Scanning	| None
-| Malware Indicators	| None
-| Overall Severity	| Low
 
-### Indicators of Suspicious Activity
-No confirmed indicators of compromise (IOCs) were identified during the live capture.
+<img width="500" height="300" alt="Screenshot from 2026-05-06 18-59-02" src="https://github.com/user-attachments/assets/5355a38e-37df-4537-8592-be02e246f80f" />
 
-### Recommendations
-- Enable DNS-over-HTTPS (DoH) to encrypt DNS queries.
-- Enable HTTPS-Only Mode in Firefox
+Figure 9 — Protocol Hierarchy Statistics 
 
-# Part 2 – Malware PCAP Analysis (Emotet + Trickbot Co-infection)
 
-## Objectives
-- Analyse a real-world malware PCAP using Wireshark.
-- Identify indicators of compromise (IOCs).
-- Investigate suspicious DNS and HTTP activity.
-- Detect command-and-control (C2) communication.
-- Demonstrate SOC analyst investigative methodology.
+
+## IOCs Found
+### Malicious IP Addresses
+| IP Address	       | Port	               | Description
+|-----------------|------------------|----------------------------|
+| 90.160.138.175	| 80	             | Emotet primary C2 server
+| 167.99.105.11	  | 8080	           | Trickbot C2 server
+| 110.39.160.66   | 447	             | Suspected module delivery server
+| 102.164.208.44	| 449	             | Persistent C2 communication
+| 103.220.47.220	| 447	             | Secondary malware server
+| 97.46.66.173	  | N/A	             |Referenced in DNSBL lookups
+
+
+## Suspicious Domains and URLs
+| Domain / URL	|                                   Description
+|-----------------------------|----------------------------------------------|
+| api.ipify.org	              | External IP lookup service abused by malware
+| wpad.stonypebble.com	      | WPAD abuse activity
+| Randomized POST URL paths	  | Emotet C2 communication
+| DNSBL lookups	              | Automated malware validation activity
+
+
+## Recommended Actions
+- Isolate the infected host from the network.
+- Block all identified malicious IP addresses.
+- Restrict outbound communication on ports 447, 449, and 8080.
+- Reset all credentials associated with the infected system.
+- Scan internal systems for Trickbot indicators.
+- Detect outbound POST requests with randomized URL paths.
+- Disable WPAD network-wide.
+- Perform forensic imaging before remediation.
+- Rebuild infected systems from known-clean images.
+
+
 
 ## Tools Used
-- Wireshark — For packet capture and traffic analysis.
+- Wireshark — For packet and protocol analysis
+- malware-traffic-analysis.net - Malware PCAP source
 - VirusTotal — Used to verify malicious IP addresses, domains, and other indicators of compromise (IOCs).
 - AbuseIPDB — Used for threat intelligence and reputation checks on suspicious external IP addresses.
 - Ubuntu — Operating system analysis environment.
-
-## Wireshark Display Filters Used (Analysis)
-### 1. http.request
-
-Used to isolate outbound HTTP requests and identify C2 communication.
-
-<img width="600" height="400" alt="Screenshot from 2026-05-06 18-49-52" src="https://github.com/user-attachments/assets/97536198-c80a-4e0e-ab6c-93109bcc8355" />
+- VirtualBox - Isolated lab setup
 
 
-### Findings
-- Multiple HTTP POST requests to 90.160.138.175.
-- Randomized URL paths consistent with Emotet C2 communication.
-- POST requests to 167.99.105.11:8080 linked to Trickbot activity.
+## Conclusion
 
-### Observation
+This project demonstrates practical network traffic analysis skills across both legitimate and malicious environments. The live capture established a clean traffic baseline, while the malware PCAP investigation revealed real-world indicators of compromise associated with Emotet and Trickbot infections.
 
-The repeated POST requests, randomized paths, and persistent communication strongly indicate active malware beaconing and data exfiltration. 
+Using Wireshark and threat intelligence platforms, suspicious behaviour including C2 beaconing, DNS abuse, SMB lateral movement, Active Directory reconnaissance, and persistent malware communication was successfully identified and analysed.
 
-### 2. dns.qry.name
-
-Used to analyse DNS queries and identify Domain Generation Algorithms (DGA) activity.
-
-<img width="600" height="400" alt="Screenshot from 2026-05-06 18-51-50" src="https://github.com/user-attachments/assets/3e54f9d2-a369-4425-843a-bbf54c51983d" />
-
-### Findings
-- 30 NXDOMAIN responses out of 162 DNS queries.
-- Queries to api.ipify.org identified.
-- WPAD abuse attempts detected through wpad.stonypebble.com.
-- DNSBL lookups against Spamhaus, SORBS, and Barracuda observed.
-
-### Observation
-
-The high NXDOMAIN rate and automated DNSBL lookups are strong indicators of malware-driven DGA activity and C2 validation behaviour.
+The project highlights essential SOC analyst skills in packet analysis, threat hunting, IOC identification, malware traffic investigation, and network-based incident response within a controlled lab environment.
 
 
-### tcp.port==4444
-
-Used to display all TCP traffic.
-
-<img width="600" height="400" alt="Screenshot from 2026-05-06 18-53-10" src="https://github.com/user-attachments/assets/c98fb248-7773-4de5-81b1-74121a02f575" />
 
 
-### findings
-- No Metasploit reverse shell activity detected.
-
-### icmp
-
-Used to display all ICMP (Internet Control Message Protocol) traffic.
-
-<img width="600" height="400" alt="Screenshot from 2026-05-06 18-53-36" src="https://github.com/user-attachments/assets/4a5a4bb1-bc05-48cd-ab06-e4821d386fff" />
-
-
-### findings 
-- 
-No ICMP scanning or flood activity observed.
-
-### 3. Statistics > Conversations and Endpoints
-
-Used to identify high-volume external communications and unusual ports.
-
-### findings 
-- 47 unique external IP addresses contacted.
-- Persistent sessions on non-standard ports 447, 449, and 8080.
-- Large data transfers to suspected C2 infrastructure.
-
-### Observation
-
-The large number of external endpoints and persistent communications are abnormal for a workstation and strongly indicate malware activity.
-
-
-### Findings Summary
-| Category	                                       | Findings
-|-----------------------------------------------|----------------------------|
-| Total Packets	                                    | 19,835
-| Malware Families                               	  | Emotet + Trickbot
-| External IPs	                                    | 47
-| Suspicious Ports	                                | 447, 449, 8080
-| SMB Activity	                                    | Detected
-| Data Exfiltration	                                | Confirmed
-| Overall Severity	                                | CRITICAL
 
 
 
