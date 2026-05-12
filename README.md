@@ -46,7 +46,7 @@ The traffic was legitimate and consistent with normal browser activity. However,
 
 <img width="500" height="300" alt="livecap_http" src="https://github.com/user-attachments/assets/f2eecb22-27a0-4acc-8162-57325ec15afc" />
 
-Figure 1 – HTTP filter analysis showing GET requests and HTTPS redirection.
+Figure 1: HTTP filter analysis showing GET requests and HTTPS redirection.
 
 ### 2. DNS Traffic Analysis
 
@@ -63,7 +63,7 @@ The DNS activity reflected legitimate browsing behaviour with no evidence of mal
 
 <img width="500" height="300" alt="livecap_dns" src="https://github.com/user-attachments/assets/46e784b2-3cd6-41b2-bf42-925fb3e7b306" />
 
-Figure 2 – DNS filter analysis displaying successful domain resolutions.
+Figure 2: DNS filter analysis displaying successful domain resolutions.
 
 ### 3. TCP SYN Analysis
 
@@ -80,7 +80,7 @@ Traffic patterns were normal and aligned with legitimate web browsing behaviour.
 
 <img width="500" height="300" alt="livecap_tcpflagsyn" src="https://github.com/user-attachments/assets/cfa89beb-a670-4b6a-999a-ae835e300be6" />
 
-Figure 3 – SYN packet analysis showing standard TCP connection establishment.
+Figure 3: SYN packet analysis showing standard TCP connection establishment.
 
 ### 4. ARP Traffic Analysis
 
@@ -95,7 +95,7 @@ VirtualBox handled ARP resolution internally, preventing ARP broadcasts from rea
 
 <img width="500" height="300" alt="livecap_arp" src="https://github.com/user-attachments/assets/79f57c6f-cda3-4c68-a547-d329fa573e58" />
 
-Figure 4 – ARP filter showing zero packets.
+Figure 4: ARP filter showing zero packets.
 
 ## IOCs Found
 Result: No Confirmed Indicators of Compromise
@@ -173,7 +173,7 @@ The randomized POST requests and persistent outbound communication strongly indi
 
 <img width="500" height="300" alt="pcap_http.request" src="https://github.com/user-attachments/assets/8a8e860a-d310-4805-b4f5-513a23690f02" />
 
-Figure 5 – HTTP POST requests to Emotet and Trickbot C2 servers.
+Figure 5: HTTP POST requests to Emotet and Trickbot C2 servers.
 
 
 ### 2. Suspicious DNS Activity and DGA Behaviour
@@ -192,7 +192,7 @@ The high NXDOMAIN rate and automated DNSBL queries are strong indicators of malw
 
 <img width="500" height="300" alt="pcap_dns.qry.name" src="https://github.com/user-attachments/assets/34cc3ead-5373-4f48-bb94-dc8b879c093d" />
 
-Figure 6 – DNS analysis showing DGA activity and DNSBL lookups.
+Figure 6: DNS analysis showing DGA activity and DNSBL lookups.
 
 ### 3. Negative Findings
 Wireshark Filter Used: tcp.port==4444
@@ -206,6 +206,7 @@ No ICMP scanning or flood traffic identified.
 The malware relied on TCP-based HTTP/HTTPS communication rather than ICMP or default Metasploit ports.
 <img width="500" height="300" alt="pcap_tcp.port" src="https://github.com/user-attachments/assets/b0d1a62a-4fcd-4c76-8ac7-1c2624fd448a" /> |
 <img width="500" height="300" alt="Screenshot from 2026-05-06 18-53-36" src="https://github.com/user-attachments/assets/80ef556d-6370-487f-ba85-37eeea047c4e" />
+
 Figure 7–8: Negative findings for port 4444 and ICMP.
 
 
@@ -225,7 +226,7 @@ The communication patterns strongly indicate persistent command-and-control acti
 <img width="500" height="300" alt="pcap_stat_conversations" src="https://github.com/user-attachments/assets/06f93bfe-857f-415d-b8fc-904e99b1559f" /> |
 <img width="500" height="300" alt="pcap_stat_endpoint" src="https://github.com/user-attachments/assets/9a61329b-2ec2-4ab6-a339-3d86eedc5a9f" />
 
-Figure 7-8: IPv4 Conversations and Endpoint analysis
+Figure 9-10: IPv4 Conversations and Endpoint analysis
 
 
 ## 5. Protocol Hierarchy 
@@ -248,7 +249,7 @@ The dominance of TCP traffic confirms that the malware primarily relied on TCP-b
 
 <img width="500" height="300" alt="Screenshot from 2026-05-06 18-59-02" src="https://github.com/user-attachments/assets/5355a38e-37df-4537-8592-be02e246f80f" />
 
-Figure 9 — Protocol Hierarchy Statistics 
+Figure 11: Protocol Hierarchy Statistics 
 
 
 
